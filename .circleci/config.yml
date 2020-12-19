@@ -12,12 +12,6 @@ orbs:
 jobs:
   build:
     docker: *vse
-version: 2.1
-
-jobs:
-  build:
-    docker:
-      - image: circleci/node:8.11.3
     steps:
       - checkout
       - run: npm install
@@ -43,7 +37,6 @@ jobs:
           playbook: ansible/ec2_deploy.yml
           playbook-options: --user ubuntu
 workflows:
-  version: 2.1
   build:
     jobs:
       - build
