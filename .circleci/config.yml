@@ -1,8 +1,15 @@
+vse:
+  docker: &vse
+    - image: 'circleci/node:8.11.3'
+semestralka:
+  docker: &semestralka
+    - image: 'circleci/python:latest'
+      environment:
+          ANSIBLE_HOST_KEY_CHECKING: no
+
 version: 2.1
 jobs:
-  build:
-    docker:
-      - image: circleci/node:8.11.3
+  build: *vse
     steps:
       - checkout
       - run: npm install
@@ -13,8 +20,7 @@ jobs:
           paths:
            - ansible
   deploy:
-    docker:
-      - image: circleci/python:3.8
+    docker: *semestralka
     steps:
       - attach_workspace:
           at: .
@@ -23,7 +29,7 @@ jobs:
          fingerprints:
           - "23:25:81:d3:c0:8e:28:7c:0e:0d:c9:00:c0:07:e3:20:3c:34:af:19"
       - run:
-         command: ansible-playbook ansible/ec2_deploy.yml --user ubuntu --key-file accesKey.pem
+         command: ansible-playbook ansible/ec2_deploy.yml --user ubuntu
          environment:
             ANSIBLE_HOST_KEY_CHECKING: False
 workflows:
