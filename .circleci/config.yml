@@ -1,41 +1,41 @@
-semestralka:
-  docker: &semestralka
+vse:
+  docker: &vse
+    - image: 'circleci/node:8.11.3'
+ansible:
+  docker: &ansible
     - image: 'circleci/python:latest'
       environment:
           ANSIBLE_HOST_KEY_CHECKING: no
-
 version: 2.1
+orbs:
+  ansible-playbook: orbss/ansible-playbook@0.0.5
 jobs:
   build:
-    docker:
-      - image: circleci/node:8.11.3
+    docker: *vse
     steps:
       - checkout
       - run: npm install
       - run: npm run test
-      - run: npm run build
+      - run: npm build
       - persist_to_workspace:
           root: .
           paths:
-           - .
+            - .
   deploy:
-    docker:
-      - image: circleci/python:3.8
+    docker: *ansible
     steps:
       - attach_workspace:
           at: .
-      - run: pip3 install ansible boto boto3
-      - add_ssh_keys:
-          fingerprints:
-            - "23:25:81:d3:c0:8e:28:7c:0e:0d:c9:00:c0:07:e3:20:3c:34:af:19"
-      - run: echo $PEM_FILE | tr , '\n' > accessKey.pem
-      - run: chmod 400 accessKey.pem
-      - run: echo $VAULT_PASS > .vault_pass.txt
+      - ansible-playbook/install
       - run:
-          command: ansible-playbook ansible/ec2_deploy.yml --user ubuntu --key-file accessKey.pem --vault-pass-file .vault_pass.txt
-          environment:
-            ANSIBLE_HOST_KEY_CHECKING: False
-
+         command: |
+          sudo pip install boto boto3
+      - add_ssh_keys:
+         fingerprints:
+          - "23:25:81:d3:c0:8e:28:7c:0e:0d:c9:00:c0:07:e3:20:3c:34:af:19"
+      - ansible-playbook/playbook:
+          playbook: ansible/ec2_deploy.yml
+          playbook-options: --user ubuntu
 workflows:
   version: 2.1
   build:
