@@ -28,7 +28,7 @@ jobs:
          fingerprints:
           - "23:25:81:d3:c0:8e:28:7c:0e:0d:c9:00:c0:07:e3:20:3c:34:af:19"
       - run:
-         command: ansible-playbook ansible/ec2_deploy.yml --user ubuntu
+         command: ansible-playbook ./ansible/ec2_deploy.yml --user ubuntu
          environment:
             ANSIBLE_HOST_KEY_CHECKING: False
 workflows:
