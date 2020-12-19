@@ -1,24 +1,22 @@
-vse: &vse
-  docker:
-    - image: circleci/node:8.11.3
-
 version: 2.1
 orbs:
   ansible-playbook: orbss/ansible-playbook@0.0.5
 jobs:
   build:
-    <<: *vse
+    docker:
+      - image: circleci/node:8.11.3
     steps:
       - checkout
       - run: npm install
       - run: npm run test
       - run: npm run build
       - persist_to_workspace:
-         root: .
-         paths:
-            - .
+          root: .
+          paths:
+           - .ansible
   deploy:
-    docker: *vse
+    docker:
+      - image: circleci/python:3.7.7
     steps:
       - attach_workspace:
           at: .
@@ -34,7 +32,6 @@ jobs:
           playbook-options: --user ubuntu
 
 workflows:
-  version: 2.1
   build:
     jobs:
       - build
