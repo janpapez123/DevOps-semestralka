@@ -20,10 +20,10 @@ workflows:
   version: 2.1
   build:
     jobs:
-      - build
+     # - build
       - deploy:
          requires:
-            - build
+        #    - build
          filters:
             branches:
                only: master
