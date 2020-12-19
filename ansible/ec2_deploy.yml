@@ -13,7 +13,7 @@
         assign_public_ip: yes
         wait: yes
         count: 1
-        group: eshop_semestralka
+        group: eshop
         aws_access_key: "ASIAWLMA2LRWSXSQKRQ4"
         aws_secret_key: "zBX6mGbAP4wwszQwFrdIk24u1PIcgyzHTg5MV7aq"
         security_token: "FwoGZXIvYXdzEM3//////////wEaDMNsJ5QB3UsfNGWkeSLEAT65NVOIeF+iCA/G/cpYmFwa3w1dWyDGAPyPlfaICDBK7WNmraSrEnAGHTVWqA9Vvon1sPiP4eg3Rh417/AwFdmHnMDrecbWnbiK7hZ5+v1S6Ofy/Y96DUsJdzxz/ls059AX5tWLYHllP6+rJVjIZMbn3CNTD04ah9Dr8spN+6JtqbM7yMDlS09DHHU1IaKVAjw8/mKxGJt2mAuG1W5mHbP9uhGT8NmtermPupfP4tCfLy2f+iScg9cgB8bOd6ylrxQ3KS0o6LP5/gUyLTtDYmfsqXhksidBWzFFD/m/JPA8yfnqa9csot7j0uVBf6ykpCwhrrG4IHkMNA=="
