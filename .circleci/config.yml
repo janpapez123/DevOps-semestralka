@@ -1,6 +1,3 @@
-vse:
-  docker: &vse
-    - image: 'circleci/node:8.11.3'
 semestralka:
   docker: &semestralka
     - image: 'circleci/python:latest'
@@ -9,7 +6,9 @@ semestralka:
 
 version: 2.1
 jobs:
-  build: *vse
+  build:
+    docker:
+      - image: circleci/node:8.11.3
     steps:
       - checkout
       - run: npm install
