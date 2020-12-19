@@ -15,3 +15,15 @@ jobs:
          root: .
          paths:
             - .
+
+workflows:
+  version: 2.1
+  build:
+    jobs:
+      - build
+      - deploy:
+         requires:
+            - build
+         filters:
+            branches:
+               only: master
