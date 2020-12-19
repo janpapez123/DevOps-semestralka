@@ -1,6 +1,4 @@
 version: 2.1
-orbs:
-  ansible-playbook: orbss/ansible-playbook@0.0.5
 jobs:
   build:
     docker:
@@ -16,22 +14,20 @@ jobs:
            - .ansible
   deploy:
     docker:
-      - image: circleci/python:3.7.7
+      - image: circleci/python:3.8
     steps:
       - attach_workspace:
           at: .
-      - ansible-playbook/install
-      - run:
-         command: |
-          sudo pip install boto boto3
+      - run: pip3 install ansible boto boto3
       - add_ssh_keys:
          fingerprints:
           - "23:25:81:d3:c0:8e:28:7c:0e:0d:c9:00:c0:07:e3:20:3c:34:af:19"
-      - ansible-playbook/playbook:
-          playbook: ansible/ec2_deploy.yml
-          playbook-options: --user ubuntu
-
+      - run:
+         command: ansible-playbook ansible/ec2_deploy.yml --user ubuntu --key-file accesKey.pem
+         environment:
+            ANSIBLE_HOST_KEY_CHECKING: False
 workflows:
+  version: 2
   build:
     jobs:
       - build
