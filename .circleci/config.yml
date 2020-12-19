@@ -1,11 +1,6 @@
 vse:
   docker: &vse
     - image: 'circleci/node:8.11.3'
-ansible:
-  docker: &ansible
-    - image: 'circleci/python:latest'
-      environment:
-          ANSIBLE_HOST_KEY_CHECKING: no
 version: 2.1
 orbs:
   ansible-playbook: orbss/ansible-playbook@0.0.5
@@ -22,7 +17,7 @@ jobs:
           paths:
             - .
   deploy:
-    docker: *ansible
+    docker: *vse
     steps:
       - attach_workspace:
           at: .
